@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Tỏ Tình Bé Bé</title>
+    <!-- Nhúng Tailwind CSS để tạo style nhanh chóng, màu hồng cute và responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tùy chỉnh font chữ Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffe4e6; /* Màu hồng nhạt (Pink-100) */
+        }
+        /* Animation cho trái tim */
+        .heart-beat {
+            animation: beat 1s infinite alternate;
+        }
+        @keyframes beat {
+            to {
+                transform: scale(1.1);
+            }
+        }
+        /* Custom style cho button hồng */
+        .pink-button {
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(252, 161, 194, 0.4), 0 2px 4px -2px rgba(252, 161, 194, 0.4);
+        }
+        .pink-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(252, 161, 194, 0.5), 0 4px 6px -4px rgba(252, 161, 194, 0.5);
+        }
+        .pink-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Khung chính của ứng dụng -->
+    <div id="appContainer" class="bg-white p-8 md:p-12 rounded-2xl shadow-xl max-w-lg w-full text-center border-4 border-pink-300">
+        
+        <!-- Trái tim cute -->
+        <div id="heartIcon" class="text-6xl text-red-500 heart-beat mb-6">
+            &#x2764; <!-- Ký tự HTML cho trái tim đen, sẽ được CSS tô màu -->
+        </div>
+
+        <!-- Khu vực hiển thị nội dung và câu hỏi -->
+        <div id="contentArea">
+            <!-- Màn hình 1: Câu hỏi ban đầu -->
+            <div id="screen1">
+                <h2 class="text-2xl font-bold text-pink-600 mb-6">
+                    Hôm nay anh khỏe không?
+                </h2>
+                <div class="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row justify-center">
+                    <button onclick="goToScreen1()" class="pink-button bg-pink-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-pink-600">
+                        Không khỏe
+                    </button>
+                    <button onclick="goToScreen2()" class="pink-button bg-red-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-red-600">
+                        Nhớ em bé
+                    </button>
+                </div>
+            </div>
+
+            <!-- Màn hình 2: Câu hỏi thứ hai -->
+            <div id="screen2" class="hidden">
+                <h2 class="text-2xl font-bold text-pink-600 mb-6">
+                    Thế anh nghĩ em có nhớ anh không?
+                </h2>
+                <div class="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row justify-center">
+                    <button onclick="goToScreen1()" class="pink-button bg-pink-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-pink-600">
+                        Rất nhớ
+                    </button>
+                    <button onclick="goToScreen3()" class="pink-button bg-red-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-red-600">
+                        Siêu siêu siêu nhớ anh iuu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Màn hình 3: Lời kết -->
+            <div id="screen3" class="hidden">
+                <h2 class="text-3xl font-extrabold text-red-600 mb-6 animate-pulse">
+                    Đúng rùi, em bé nhớ anh iu lắmmm!
+                </h2>
+                <p class="text-2xl font-bold text-pink-500 mb-8">
+                    Iu anh :>
+                </p>
+                <!-- Nút quay lại để xem lại -->
+                <button onclick="resetApp()" class="pink-button bg-pink-200 text-pink-700 font-semibold py-2 px-5 rounded-full hover:bg-pink-300">
+                    Bắt đầu lại
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Lấy các element màn hình
+        const screen1 = document.getElementById('screen1');
+        const screen2 = document.getElementById('screen2');
+        const screen3 = document.getElementById('screen3');
+        const heartIcon = document.getElementById('heartIcon');
+        
+        // Hàm hiển thị màn hình
+        function showScreen(screenToShow) {
+            // Ẩn tất cả màn hình
+            screen1.classList.add('hidden');
+            screen2.classList.add('hidden');
+            screen3.classList.add('hidden');
+
+            // Hiện màn hình mong muốn
+            screenToShow.classList.remove('hidden');
+
+            // Thêm hiệu ứng lắc nhẹ khi chuyển màn hình
+            heartIcon.classList.remove('heart-beat');
+            void heartIcon.offsetWidth; // Trigger reflow
+            heartIcon.classList.add('heart-beat');
+        }
+
+        // Chuyển sang Màn hình 1 (Câu hỏi 1) - Dùng cho nút "Không khỏe" và "Rất nhớ"
+        function goToScreen1() {
+            showScreen(screen1);
+        }
+
+        // Chuyển sang Màn hình 2 (Câu hỏi 2) - Dùng cho nút "Nhớ em bé"
+        function goToScreen2() {
+            showScreen(screen2);
+        }
+
+        // Chuyển sang Màn hình 3 (Lời kết) - Dùng cho nút "Siêu siêu siêu nhớ anh iuu"
+        function goToScreen3() {
+            showScreen(screen3);
+        }
+
+        // Đặt lại ứng dụng về trạng thái ban đầu
+        function resetApp() {
+            goToScreen1();
+        }
+
+        // Khởi tạo trạng thái ban đầu (Hiển thị Màn hình 1 khi load)
+        window.onload = resetApp;
+
+    </script>
+</body>
+</html>
